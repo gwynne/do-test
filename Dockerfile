@@ -1,8 +1,7 @@
 FROM swift:5.3-focal as build
 WORKDIR /build
 COPY . .
-RUN swift build --enable-test-discovery -c debug -j 1 -v -Xcc -v -Xcxx -v -Xlinker -v -Xswiftc -v | \
-    egrep -v -- '-o /build/\.build/x86_64-unknown-linux-gnu/debug/CNIOBoring|clang version 10|Thread model|GCC installation|multilib'
+RUN swift build --enable-test-discovery -c debug -j 1 -v -Xcc -v -Xcxx -v -Xlinker -v -Xswiftc -v
 WORKDIR /staging
 RUN cp "$(swift build --package-path /build -c release --show-bin-path)/Run" ./
 

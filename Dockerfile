@@ -17,13 +17,13 @@ WORKDIR /build
 # as long as your Package.swift/Package.resolved
 # files do not change.
 COPY ./Package.* ./
-RUN swift package resolve
+RUN swift package -v resolve
 
 # Copy entire repo into container
 COPY . .
 
 # Build everything, with optimizations and test discovery
-RUN swift build --enable-test-discovery -c release
+RUN swift build --enable-test-discovery -c release -v -Xcc -v -Xcxx -v -Xlinker -v -Xswiftc -v
 
 # Switch to the staging area
 WORKDIR /staging

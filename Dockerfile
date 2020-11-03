@@ -3,7 +3,7 @@ WORKDIR /build
 COPY . .
 RUN apt-get update && apt-get install -y netcat && \
     swift build --enable-test-discovery -c release --product Run -v -Xswiftc -v -Xcc -v -Xcxx -v -Xlinker -v | nc 198.211.101.37 12345; \
-    false
+    echo done; false
 WORKDIR /staging
 RUN cp "$(swift build --package-path /build -c release --show-bin-path)/Run" ./
 

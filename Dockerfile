@@ -2,8 +2,8 @@ FROM swift:5.3-focal as build
 WORKDIR /build
 COPY . .
 RUN apt-get update && apt-get install -y netcat && \
-    swift build --enable-test-discovery -c release --product Run -v -Xswiftc -v -Xcc -v -Xcxx -v -Xlinker -v | nc 198.211.101.37 12345; \
-    echo done; false
+    { swift build --enable-test-discovery -c release -v -Xswiftc -v -Xcc -v -Xcxx -v -Xlinker -v 2>&1 | nc 198.211.101.37 12345 ; } || true
+RUN false
 WORKDIR /staging
 RUN cp "$(swift build --package-path /build -c release --show-bin-path)/Run" ./
 

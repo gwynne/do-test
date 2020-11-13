@@ -1,7 +1,7 @@
 FROM swift:5.3-focal as build
 WORKDIR /build
 COPY . .
-RUN swift build --enable-test-discovery -c release -Xswiftc -use-ld=lld
+RUN swift build --enable-test-discovery -c release -Xswiftc -use-ld=ld.bfd
 WORKDIR /staging
 RUN cp "$(swift build --package-path /build -c release --show-bin-path)/Run" ./
 
